@@ -29,12 +29,13 @@ export default function Todos() {
             <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
                 <div className="flex items-center">
                     <h1 className="font-semibold text-lg md:text-2xl">Todos</h1>
-                    <button className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium h-9 rounded-md px-3 ml-auto text-white bg-black">
-                        <Link to="/addtodo">
-                            Add Todo
-                        </Link>
-                    </button>
+                    <Link to="/addtodo"
+                        className="inline-flex items-center justify-center whitespace-nowrap
+                        text-sm font-medium h-9 rounded-md px-3 ml-auto text-white bg-indigo-600"
 
+                    >
+                        Add Todo
+                    </Link>
                 </div>
                 <div className="border shadow-sm rounded-lg">
                     <div className="relative w-full overflow-auto">
@@ -52,15 +53,21 @@ export default function Todos() {
 const THEAD = () => {
     return (
         <thead className="[&amp;_tr]:border-b">
-            <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 max-w-[150px]">
+            <tr className="border-b ">
+                <th className="h-12 px-4 text-left align-middle font-bold max-w-[150px]">
                     Title
                 </th>
-                <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 hidden md:table-cell">
+                <th className="h-12 px-4 text-left align-middle font-bold hidden md:table-cell">
                     Description
                 </th>
-                <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 hidden md:table-cell">
+                <th className="h-12 px-4 text-left align-middle font-bold hidden md:table-cell">
                     Due Date
+                </th>
+                <th className="h-12 px-4 text-left align-middle font-bold hidden md:table-cell">
+                    Delete
+                </th>
+                <th className="h-12 px-4 text-left align-middle font-bold hidden md:table-cell">
+                    View Todo
                 </th>
             </tr>
         </thead>
@@ -70,17 +77,30 @@ const THEAD = () => {
 
 const TBody = ({ todos }: { todos: Todo[] }) => {
     return (
-        <tbody className="[&amp;_tr:last-child]:border-0">
+        <tbody>
             {
-                todos && todos.map((todo: Todo) => {
+                todos && todos.map((todo: Todo, index: number) => {
                     const dueDate = new Date(todo.due_date).toDateString();
                     return (
-                        <tr key={todo.id} className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted" >
-                            <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">{todo.title}</td>
-                            <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 hidden md:table-cell">
-                                {todo.description}
+                        <tr key={todo.id} className={`cursor-pointer border-b ${index % 2 == 0 ? "bg-gray-300" : ""}`} >
+                            <td className="p-4 align-middle font-medium">{todo.title}</td>
+                            <td className="p-4 align-middle hidden md:table-cell">
+                                {todo.description.split(' ').slice(0, 6).join(' ')} ...
                             </td>
-                            <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 hidden md:table-cell">{dueDate}</td>
+                            <td className="p-4 align-middle hidden md:table-cell">{dueDate}</td>
+                            <td className="p-4 align-middle hidden md:table-cell">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                </svg>
+                            </td>
+                            <td className="p-4 align-middle hidden md:table-cell">
+                                <Link to={`/viewtodo/${todo.id}`}
+                                    className="inline-flex items-center justify-center whitespace-nowrap
+                                    text-sm font-medium h-9 rounded-md px-3 ml-auto text-white bg-indigo-600"
+                                >
+                                    View
+                                </Link>
+                            </td>
                         </tr>
                     )
                 })
