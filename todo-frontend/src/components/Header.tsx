@@ -10,9 +10,9 @@ export default function Header() {
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     className="h-6 w-6"
                 >
                     <polyline points="20 6 9 17 4 12"></polyline>
@@ -29,9 +29,9 @@ export default function Header() {
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                             className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 "
                         >
                             <circle cx="11" cy="11" r="8"></circle>
