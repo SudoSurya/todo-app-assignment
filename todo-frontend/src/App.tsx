@@ -1,8 +1,8 @@
+import { Outlet } from "react-router-dom"
 import CategoryAll from "./components/CategoryAll"
 import CategoryPersonal from "./components/CategoryPersonal"
 import CategoryWork from "./components/CategoryWork"
 import Header from "./components/Header"
-import Todos from "./components/Todo"
 import TodoLogo from "./components/TodoLogo"
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
                     {/*header */}
                     <Header />
                     {/*main */}
-                    <Todos />
+                    <Outlet />
                 </div>
             </div>
         </>
