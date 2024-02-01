@@ -69,6 +69,9 @@ func (s *service) GetTodoById(id string) (models.Todo, error) {
 		&todo.DueDate,
 		&todo.Category,
 	)
+    if err != nil {
+        return models.Todo{}, err
+    }
 
 	tagsQuery := `SELECT name FROM tags WHERE todo_id = $1;`
 

@@ -23,6 +23,9 @@ func (s *Server) RegisterRoutes() http.Handler {
 		AllowCredentials: true,
 		MaxAge:           300, // Maximum value not ignored by any of major browsers
 	}))
+    r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+        w.Write([]byte("welcome"))
+    })
 	r.Post("/createtodo", s.createTodo)
 	r.Get("/gettodos", s.getTodos)
     r.Get("/gettodo/{id}", s.getTodoById)
