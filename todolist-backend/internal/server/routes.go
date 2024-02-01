@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"todolist-backend/internal/models"
+	"todolist-backend/internal/utils"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -24,6 +25,7 @@ func (s *Server) RegisterRoutes() http.Handler {
 	}))
 	r.Post("/createtodo", s.createTodo)
 	r.Get("/gettodos", s.getTodos)
+    r.Get("/gettodo/{id}", s.getTodoById)
 	return r
 }
 
@@ -43,9 +45,7 @@ func (s *Server) createTodo(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusCreated)
-	_ = json.NewEncoder(w).Encode(todo)
+    utils.RespondWithJson(w, http.StatusOK, todo)
 }
 
 func (s *Server) getTodos(w http.ResponseWriter, r *http.Request) {
@@ -55,8 +55,16 @@ func (s *Server) getTodos(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+    utils.RespondWithJson(w, http.StatusOK, todos)
+}
 
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	_ = json.NewEncoder(w).Encode(todos)
+
+func (s *Server) getTodoById(w http.ResponseWriter, r *http.Request) {
+    id := chi.URLParam(r, "id")
+    todo, err := s.db.GetTodoById(id)
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusBadRequest)
+        return
+    }
+    utils.RespondWithJson(w, http.StatusOK, todo)
 }

@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"time"
 	"todolist-backend/internal/models"
 
 	_ "github.com/jackc/pgx/v5/stdlib"
@@ -14,7 +13,8 @@ import (
 
 type Service interface {
 	CreateTodo(data models.TodoCreate) (models.Todo, error)
-	GetTodos() ([]models.Todo, error)
+	GetTodos() ([]GetTodosResponse, error)
+    GetTodoById(id string) (models.Todo, error)
 }
 
 type service struct {
@@ -71,34 +71,3 @@ func New() Service {
 	return s
 }
 
-func (s *service) CreateTodo(data models.TodoCreate) (models.Todo, error) {
-	var todo models.Todo
-	query := `INSERT INTO todos
-        (title, description, created_at, updated_at, due_date)
-        VALUES($1, $2, $3, $4, $5)
-        RETURNING id, title, description, created_at, updated_at, due_date;`
-	err := s.db.QueryRow(query, data.Title, data.Description, time.Now().UTC(), time.Now().UTC(), data.DueDate).
-		Scan(&todo.ID, &todo.Title, &todo.Description, &todo.CreatedAt, &todo.UpdatedAt, &todo.DueDate)
-	if err != nil {
-		return todo, err
-	}
-	return todo, nil
-}
-
-func (s *service) GetTodos() ([]models.Todo, error) {
-	var todos []models.Todo
-	query := `SELECT id,title,description,current_state,created_at,updated_at,due_date FROM todos`
-	rows, err := s.db.Query(query)
-	if err != nil {
-		return todos, err
-	}
-	for rows.Next() {
-		var todo models.Todo
-		err := rows.Scan(&todo.ID, &todo.Title, &todo.Description, &todo.CurrentState, &todo.CreatedAt, &todo.UpdatedAt, &todo.DueDate)
-		if err != nil {
-			return todos, err
-		}
-		todos = append(todos, todo)
-	}
-	return todos, nil
-}
