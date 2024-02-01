@@ -1,5 +1,8 @@
 ## Setup
 
+## Frontend Screenshots
+[Frontend Screenshots](https://github.com/SudoSurya/todo-app-assignment/tree/master/todo-frontend#react--typescript--vite)
+
 ## Todo List
 
 - [x] adding todos
