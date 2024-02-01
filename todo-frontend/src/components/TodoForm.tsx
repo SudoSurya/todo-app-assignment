@@ -1,4 +1,5 @@
 import axios from "axios"
+import { useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import toast, { Toaster } from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
@@ -10,6 +11,7 @@ type Inputs = {
     category: 'work' | 'personal'
 }
 export default function TodoForm() {
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
     const {
         register,
         handleSubmit,
@@ -18,10 +20,10 @@ export default function TodoForm() {
     const navigate = useNavigate();
 
     const onSubmit: SubmitHandler<Inputs> = (data) => {
-        console.log(data)
         try {
             axios.post("http://localhost:8000/createtodo", data)
                 .then(() => {
+                    setIsSubmitting(true)
                     toast.success("Added to cart");
                 }).catch((err) => {
                     toast.error(err.response.data.error)
@@ -107,10 +109,12 @@ export default function TodoForm() {
             </div>
             <div className="mt-10">
                 <button
+                    disabled={isSubmitting}
                     type="submit"
-                    className="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5
+                    className={`block w-full rounded-md bg-indigo-600 px-3.5 py-2.5
+                    ${isSubmitting ? "cursor-not-allowed" : "hover:bg-indigo-700"}
                     text-center text-sm font-semibold text-white shadow-sm
-                    focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                    focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2`}
                 >
                     Add Todo
                 </button>
