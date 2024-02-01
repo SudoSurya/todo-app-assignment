@@ -20,7 +20,7 @@ export default function TodoForm() {
     const onSubmit: SubmitHandler<Inputs> = (data) => {
         console.log(data)
         try {
-            axios.post("http://localhost:8080/createtodo", data)
+            axios.post("http://localhost:8000/createtodo", data)
                 .then(() => {
                     toast.success("Added to cart");
                 }).catch((err) => {
