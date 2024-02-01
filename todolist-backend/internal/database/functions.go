@@ -115,3 +115,17 @@ func (s *service) UpdateTodos(updatedData models.TodoUpdate) error {
 
     return nil
 }
+
+func (s *service) DeleteTodo(id string)(error) {
+    query := `DELETE FROM todos WHERE id = $1;`
+    deleteTagQuery := `DELETE FROM tags WHERE todo_id = $1;`
+    _, err := s.db.Exec(deleteTagQuery, id)
+    if err != nil {
+        return err
+    }
+    _, err = s.db.Exec(query, id)
+    if err != nil {
+        return err
+    }
+    return nil
+}

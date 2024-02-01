@@ -16,6 +16,7 @@ type Service interface {
 	GetTodos() ([]GetTodosResponse, error)
 	GetTodoById(id string) (models.Todo, error)
 	UpdateTodos(updatedData models.TodoUpdate) error
+	DeleteTodo(id string) error
 }
 
 type service struct {

@@ -30,6 +30,8 @@ func (s *Server) RegisterRoutes() http.Handler {
 	r.Get("/gettodos", s.getTodos)
     r.Get("/gettodo/{id}", s.getTodoById)
     r.Put("/updatetodo", s.updateTodos)
+    r.Delete("/deletetodo/{id}", s.deleteTodo)
+
 	return r
 }
 
@@ -81,6 +83,16 @@ func (s *Server) updateTodos(w http.ResponseWriter,r *http.Request) {
         return
     }
     err = s.db.UpdateTodos(todoUpdate)
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusBadRequest)
+        return
+    }
+    utils.RespondWithJson(w, http.StatusOK, map[string]string{"message": "success"})
+}
+
+func (s *Server) deleteTodo(w http.ResponseWriter,r *http.Request) {
+    id := chi.URLParam(r, "id")
+    err := s.db.DeleteTodo(id)
     if err != nil {
         http.Error(w, err.Error(), http.StatusBadRequest)
         return
