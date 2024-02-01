@@ -58,13 +58,41 @@ func (s *service) GetAllTodos() ([]GetTodosResponse, error) {
 	return todos, nil
 }
 
+func (s *service) CompletedTodos() ([]GetTodosResponse,error){
+    var todos []GetTodosResponse
+
+    query := `SELECT id, title, description, due_date FROM todos WHERE current_state='completed';`
+
+    rows, err := s.db.Query(query)
+    if err != nil {
+        return []GetTodosResponse{}, err
+    }
+    defer rows.Close()
+
+    for rows.Next() {
+        var todo GetTodosResponse
+        err := rows.Scan(&todo.Id, &todo.Title, &todo.Description, &todo.Due_date)
+        if err != nil {
+            return []GetTodosResponse{}, err
+        }
+        todos = append(todos, todo)
+    }
+
+    if err != nil {
+        return []GetTodosResponse{}, err
+    }
+    return todos, nil
+}
+
 func (s *service) GetTodos(category string) ([]GetTodosResponse, error) {
 	var todos []GetTodosResponse
 	/* query todos by category */
 	query := `SELECT id, title, description, due_date FROM todos WHERE category = $1 and current_state!='completed';`
 	if category == "all" {
 		return s.GetAllTodos()
-	}
+	} else if category == "completed" {
+        return s.CompletedTodos()
+    }
 
 	rows, err := s.db.Query(query, category)
 	if err != nil {
@@ -137,10 +165,12 @@ func (s *service) GetTodoById(id string) (models.Todo, error) {
 }
 
 func (s *service) UpdateTodos(updatedData models.TodoUpdate) error {
-	query := `UPDATE todos SET title = $1, description = $2, due_date = $3, category = $4, updated_at = $5 WHERE id = $6;`
+	query := `UPDATE todos SET title = $1, description = $2, due_date = $3,
+                category = $4, updated_at = $5, current_state =$6 WHERE id = $7;`
 	updateTagQuery := `UPDATE tags SET name = $1 WHERE todo_id = $2;`
 
-	_, err := s.db.Exec(query, updatedData.Title, updatedData.Description, updatedData.DueDate, updatedData.Category, time.Now().UTC(), updatedData.ID)
+	_, err := s.db.Exec(query, updatedData.Title, updatedData.Description,
+		updatedData.DueDate, updatedData.Category, time.Now().UTC(), updatedData.CurrentState, updatedData.ID)
 	if err != nil {
 		return err
 	}

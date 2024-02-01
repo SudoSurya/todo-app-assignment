@@ -4,6 +4,7 @@ import CategoryPersonal from "./components/CategoryPersonal"
 import CategoryWork from "./components/CategoryWork"
 import Header from "./components/Header"
 import TodoLogo from "./components/TodoLogo"
+import CategoryCompleted from "./components/CategoryCompleted"
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
                         <CategoryAll />
                         <CategoryWork />
                         <CategoryPersonal />
+                        <CategoryCompleted />
                     </div>
                 </div>
                 <div className="flex flex-col">

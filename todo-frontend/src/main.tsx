@@ -8,6 +8,7 @@ import { TodosSkeleton } from './components/Todo.tsx'
 import SingleTodo from './components/SingleTodo.tsx'
 import WorkTodos from './components/WorkTodos.tsx'
 import PersonalTodos from './components/PersonalTodos.tsx'
+import CompletedTodos from './components/CompletedTodos.tsx'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
@@ -19,6 +20,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                     <Route path="/viewtodo/:id" element={<SingleTodo />} />
                     <Route path="/work/todos" element={<WorkTodos />} />
                     <Route path="/personal/todos" element={<PersonalTodos />} />
+                    <Route path="/completed" element={<CompletedTodos />} />
                 </Route>
             </Routes>
         </BrowserRouter>
