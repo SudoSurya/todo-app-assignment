@@ -1,20 +1,25 @@
 # React + TypeScript + Vite
 
-
 ## main page
-![./public/mainpage.png](path)
+
+![main page](./public/mainpage.png)
 
 ## add todo
-![./public/addtodo.png](path)
+
+![add todo](./public/addtodo.png)
 
 ## view todo
-![./public/viewtodo.png](path)
+
+![view todo](./public/viewtodo.png)
 
 ## edit todo
-![./public/viewtodo.png](path)
+
+![edit todo](./public/viewtodo.png)
 
 ## work category
-![./public/personal.png](path)
+
+![work category](./public/personal.png)
 
 ## personal category
-![./public/work.png](path)
+
+![personal category](./public/work.png)
