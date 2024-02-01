@@ -104,7 +104,6 @@ const TodoDetails = ({ todo }: { todo: TodoResponse }) => {
     const onSubmit: SubmitHandler<TodoResponse> = (data) => {
         data.id = editedTodo.id;
         data.tags = editedTodo.tags;
-        console.log(data)
         try {
             axios.put(`http://localhost:8000/updatetodo`, data)
                 .then((res) => {

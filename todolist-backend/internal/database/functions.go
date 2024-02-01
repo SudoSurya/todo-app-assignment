@@ -16,6 +16,12 @@ func (s *service) CreateTodo(data models.TodoCreate) (models.Todo, error) {
 	if err != nil {
 		return todo, err
 	}
+	insertdefaulttag := `INSERT INTO tags (name, todo_id) VALUES ($1, $2);`
+
+	_, err = s.db.Exec(insertdefaulttag, data.Category, todo.ID)
+	if err != nil {
+		return todo, err
+	}
 	return todo, nil
 }
 
