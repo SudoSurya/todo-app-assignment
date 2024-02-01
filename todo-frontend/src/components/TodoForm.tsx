@@ -7,6 +7,7 @@ type Inputs = {
     title: string,
     due_date: string,
     description: string
+    category: 'work' | 'personal'
 }
 export default function TodoForm() {
     const {
@@ -65,6 +66,24 @@ export default function TodoForm() {
                             text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300
                             sm:text-sm"
                         />
+                    </div>
+                    {errors.due_date && <span className="text-red-500">This due date is required</span>}
+                </div>
+                <div className="sm:col-span-2">
+                    <label htmlFor="email" className="block text-sm font-semibold leading-6 text-gray-900">
+                        Category
+                    </label>
+                    <div className="my-2.5">
+                        <select
+                            id="category"
+                            {...register("category", { required: true })}
+                            className="block w-full rounded-md border-0 px-3.5 py-2
+                            shadow-sm ring-1 ring-inset ring-gray-300
+                            sm:text-sm"
+                        >
+                            <option value="work">Work</option>
+                            <option value="personal">Personal</option>
+                        </select>
                     </div>
                     {errors.due_date && <span className="text-red-500">This due date is required</span>}
                 </div>
