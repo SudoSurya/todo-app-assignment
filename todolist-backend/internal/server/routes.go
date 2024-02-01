@@ -29,6 +29,7 @@ func (s *Server) RegisterRoutes() http.Handler {
 	r.Post("/createtodo", s.createTodo)
 	r.Get("/gettodos", s.getTodos)
     r.Get("/gettodo/{id}", s.getTodoById)
+    r.Put("/updatetodo", s.updateTodos)
 	return r
 }
 
@@ -70,4 +71,19 @@ func (s *Server) getTodoById(w http.ResponseWriter, r *http.Request) {
         return
     }
     utils.RespondWithJson(w, http.StatusOK, todo)
+}
+
+func (s *Server) updateTodos(w http.ResponseWriter,r *http.Request) {
+    var todoUpdate models.TodoUpdate
+    err := json.NewDecoder(r.Body).Decode(&todoUpdate)
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusBadRequest)
+        return
+    }
+    err = s.db.UpdateTodos(todoUpdate)
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusBadRequest)
+        return
+    }
+    utils.RespondWithJson(w, http.StatusOK, map[string]string{"message": "success"})
 }

@@ -20,10 +20,13 @@ type TodoCreate struct {
 }
 
 type TodoUpdate struct {
-	ID           string `json:"id"`
-	Title        string `json:"title"`
-	Description  string `json:"description"`
-	CurrentState string `json:"current_state"`
+	ID           string   `json:"id"`
+	Title        string   `json:"title"`
+	Description  string   `json:"description"`
+	CurrentState string   `json:"current_state"` /* todo, progress, done */
+	Category     string   `json:"category"`
+	DueDate      string   `json:"due_date"`
+	Tags         []string `json:"tags"`
 }
 
 type TodoDelete struct {

@@ -96,3 +96,22 @@ func (s *service) GetTodoById(id string) (models.Todo, error) {
 
 	return todo, nil
 }
+
+func (s *service) UpdateTodos(updatedData models.TodoUpdate) error {
+    query := `UPDATE todos SET title = $1, description = $2, due_date = $3, category = $4, updated_at = $5 WHERE id = $6;`
+    updateTagQuery := `UPDATE tags SET name = $1 WHERE todo_id = $2;`
+
+    _, err := s.db.Exec(query, updatedData.Title, updatedData.Description, updatedData.DueDate, updatedData.Category, time.Now().UTC(), updatedData.ID)
+    if err != nil {
+        return err
+    }
+
+    for _, tag := range updatedData.Tags {
+        _, err := s.db.Exec(updateTagQuery, tag, updatedData.ID)
+        if err != nil {
+            return err
+        }
+    }
+
+    return nil
+}

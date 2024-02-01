@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form"
+import toast, { Toaster } from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 
 type SingleTodoParams = {
@@ -21,7 +22,7 @@ type TodoResponse = {
 
 const getTodo = async (id: string) => {
     try {
-        const res = await axios.get<TodoResponse>(`http://localhost:8080/gettodo/${id}`)
+        const res = await axios.get<TodoResponse>(`http://localhost:8000/gettodo/${id}`)
         return res.data
     } catch (error) {
         console.log(error)
@@ -101,11 +102,13 @@ const TodoDetails = ({ todo }: { todo: TodoResponse }) => {
         formState: { errors },
     } = useForm<TodoResponse>()
     const onSubmit: SubmitHandler<TodoResponse> = (data) => {
+        data.id = editedTodo.id;
+        data.tags = editedTodo.tags;
         console.log(data)
         try {
-            axios.put(`http://localhost:8080/updatetodo/${todo.id}`, data)
-                .then(() => {
-                    console.log("Updated todo");
+            axios.put(`http://localhost:8000/updatetodo`, data)
+                .then((res) => {
+                    toast.success(res.data.message);
                 }).catch((err) => {
                     console.log(err)
                 })
@@ -115,6 +118,7 @@ const TodoDetails = ({ todo }: { todo: TodoResponse }) => {
     }
     return (
         <form action="#" method="POST" onSubmit={handleSubmit(onSubmit)}>
+            <Toaster/>
             <div className="grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2">
                 <div className="sm:col-span-2">
                     <div className="my-2.5">
@@ -247,7 +251,6 @@ const TodoDetails = ({ todo }: { todo: TodoResponse }) => {
                             className="block w-full rounded-md border-0 px-3.5 py-2
                             text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300
                             sm:text-sm"
-                            defaultValue={''}
                         />
                     </div>
                     {errors.description && <span className="text-red-500">This description is required</span>}

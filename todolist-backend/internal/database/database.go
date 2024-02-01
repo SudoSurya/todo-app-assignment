@@ -14,7 +14,8 @@ import (
 type Service interface {
 	CreateTodo(data models.TodoCreate) (models.Todo, error)
 	GetTodos() ([]GetTodosResponse, error)
-    GetTodoById(id string) (models.Todo, error)
+	GetTodoById(id string) (models.Todo, error)
+	UpdateTodos(updatedData models.TodoUpdate) error
 }
 
 type service struct {
@@ -70,4 +71,3 @@ func New() Service {
 	s := &service{db: db}
 	return s
 }
-
