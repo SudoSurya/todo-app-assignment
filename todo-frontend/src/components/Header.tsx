@@ -1,8 +1,9 @@
+import { Link } from "react-router-dom";
 
 export default function Header() {
     return (
         <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 ">
-            <a className="lg:hidden" href="#">
+            <Link to="/" className="lg:hidden">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -18,7 +19,7 @@ export default function Header() {
                     <polyline points="20 6 9 17 4 12"></polyline>
                 </svg>
                 <span className="sr-only">Home</span>
-            </a>
+            </Link>
             <div className="w-full flex-1">
                 <form>
                     <div className="relative">

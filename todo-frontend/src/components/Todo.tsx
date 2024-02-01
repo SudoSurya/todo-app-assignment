@@ -46,7 +46,8 @@ export const Todos: React.FC<TodosProps> = ({ category }) => {
             <Toaster />
             <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
                 <div className="flex items-center">
-                    <h1 className="font-semibold text-lg md:text-2xl">Todos</h1>
+                    <h1 className="font-semibold text-lg md:text-2xl">
+                        {category.charAt(0).toUpperCase() + category.slice(1)} Todos</h1>
                     <Link to="/addtodo"
                         className="inline-flex items-center justify-center whitespace-nowrap
                         text-sm font-medium h-9 rounded-md px-3 ml-auto text-white bg-indigo-600"
