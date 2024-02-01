@@ -1,5 +1,15 @@
 ## Setup
 
+## Todo List
+
+- [ ] adding todos
+- [ ] deleting todos
+- [ ] updating todos
+- [ ] marking todos as complete
+- [ ] searching todos
+- [ ] authentication
+- [ ] divide todos into categories
+
 ### Backend Setup
 
 1. Cd into the backend directory
