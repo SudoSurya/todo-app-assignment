@@ -12,7 +12,7 @@ type TodoResponse = {
     id: string,
     title: string,
     description: string,
-    current_status: string,
+    current_state: string,
     category: string,
     created_at: string,
     updated_at: string,
@@ -104,6 +104,7 @@ const TodoDetails = ({ todo }: { todo: TodoResponse }) => {
     const onSubmit: SubmitHandler<TodoResponse> = (data) => {
         data.id = editedTodo.id;
         data.tags = editedTodo.tags;
+        console.log(data.current_state)
         try {
             axios.put(`http://localhost:8000/updatetodo`, data)
                 .then((res) => {
@@ -146,17 +147,17 @@ const TodoDetails = ({ todo }: { todo: TodoResponse }) => {
                     </label>
                     <div className="my-2.5">
                         <select
-                            id="status"
-                            value={editedTodo.current_status}
-                            {...register("current_status", { required: true })}
-                            onChange={(e) => { setEditedTodo({ ...editedTodo, current_status: e.target.value }) }}
+                            id="state"
+                            value={editedTodo.current_state}
+                            {...register("current_state", { required: true })}
+                            onChange={(e) => { setEditedTodo({ ...editedTodo, current_state: e.target.value }) }}
                             className="block rounded-md border-0 px-3.5 py-2
                             shadow-sm ring-1 ring-inset ring-gray-300
                             sm:text-sm"
                         >
                             <option value="todo">Todo</option>
-                            <option value="in-progress">In Progress</option>
-                            <option value="done">Done</option>
+                            <option value="progress">In Progress</option>
+                            <option value="completed">Done</option>
                         </select>
 
                     </div>
