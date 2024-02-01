@@ -13,10 +13,11 @@ import (
 
 type Service interface {
 	CreateTodo(data models.TodoCreate) (models.Todo, error)
-	GetTodos() ([]GetTodosResponse, error)
+	GetTodos(category string) ([]GetTodosResponse, error)
 	GetTodoById(id string) (models.Todo, error)
 	UpdateTodos(updatedData models.TodoUpdate) error
 	DeleteTodo(id string) error
+	GetAllTodos() ([]GetTodosResponse, error)
 }
 
 type service struct {

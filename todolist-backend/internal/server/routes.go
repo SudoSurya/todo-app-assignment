@@ -27,7 +27,7 @@ func (s *Server) RegisterRoutes() http.Handler {
         w.Write([]byte("welcome"))
     })
 	r.Post("/createtodo", s.createTodo)
-	r.Get("/gettodos", s.getTodos)
+	r.Get("/todos/{category}", s.getTodos)
     r.Get("/gettodo/{id}", s.getTodoById)
     r.Put("/updatetodo", s.updateTodos)
     r.Delete("/deletetodo/{id}", s.deleteTodo)
@@ -55,8 +55,8 @@ func (s *Server) createTodo(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) getTodos(w http.ResponseWriter, r *http.Request) {
-
-	todos, err := s.db.GetTodos()
+    category := chi.URLParam(r, "category")
+	todos, err := s.db.GetTodos(category)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return

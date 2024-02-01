@@ -51,8 +51,8 @@ func MockData(db *sql.DB) {
         VALUES
         ('Complete Project Proposal', 'Research and write a detailed project proposal for upcoming client meeting', 'todo', '2021-01-01', '2021-01-01', '2021-02-15', 'work'),
         ('Prepare Presentation Slides', 'Create engaging presentation slides for the team meeting on project updates', 'todo', '2021-01-05', '2021-01-05', '2021-02-20', 'work'),
-        ('Review Code Changes', 'Go through recent code changes and provide feedback to the development team', 'todo', '2021-01-10', '2021-01-10', '2021-02-25', 'work'),
-        ('Attend Project Kickoff', 'Join the project kickoff meeting with the client and discuss project milestones', 'todo', '2021-01-15', '2021-01-15', '2021-03-01', 'work');
+        ('Review Code Changes', 'Go through recent code changes and provide feedback to the development team', 'todo', '2021-01-10', '2021-01-10', '2021-02-25', 'personal'),
+        ('Attend Project Kickoff', 'Join the project kickoff meeting with the client and discuss project milestones', 'todo', '2021-01-15', '2021-01-15', '2021-03-01', 'personal');
     `)
 	if err != nil {
 		log.Fatal(err)
