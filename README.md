@@ -2,13 +2,13 @@
 
 ## Todo List
 
-- [ ] adding todos
-- [ ] deleting todos
-- [ ] updating todos
-- [ ] marking todos as complete
+- [x] adding todos
+- [x] deleting todos
+- [x] updating todos
+- [x] marking todos as complete
 - [ ] searching todos
 - [ ] authentication
-- [ ] divide todos into categories
+- [x] divide todos into categories
 
 ### Backend Setup
 
