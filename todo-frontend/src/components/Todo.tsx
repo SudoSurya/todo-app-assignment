@@ -2,6 +2,8 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import toast, { Toaster } from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { THEAD } from "./Thead";
+
 type Todo = {
     id: string,
     title: string,
@@ -12,29 +14,33 @@ type Todo = {
     due_date: string
 }
 
-export default function Todos() {
+interface TodosProps {
+    category: string; // or the specific type you expect
+}
+
+export const Todos: React.FC<TodosProps> = ({ category }) => {
     const [todos, setTodos] = useState<Todo[] | null>([])
 
     const deleteTodo = async (id: string) => {
         try {
             const res = await axios.delete(`http://localhost:8000/deletetodo/${id}`)
             toast.success(res.data.message)
-            getTodos()
+            getTodos(category)
         } catch (error) {
             console.log(error)
         }
     }
-    const getTodos = async () => {
+    const getTodos = async (category: string) => {
         try {
-            const res = await axios.get("http://localhost:8000/gettodos")
+            const res = await axios.get(`http://localhost:8000/todos/${category}`)
             setTodos(res.data)
         } catch (error) {
             console.log(error)
         }
     }
     useEffect(() => {
-        getTodos()
-    }, [])
+        getTodos(category)
+    }, [category])
     return (
         <>
             <Toaster />
@@ -62,28 +68,8 @@ export default function Todos() {
     )
 }
 
-const THEAD = () => {
-    return (
-        <thead className="[&amp;_tr]:border-b">
-            <tr className="border-b ">
-                <th className="h-12 px-4 text-left align-middle font-bold max-w-[150px]">
-                    Title
-                </th>
-                <th className="h-12 px-4 text-left align-middle font-bold hidden md:table-cell">
-                    Description
-                </th>
-                <th className="h-12 px-4 text-left align-middle font-bold hidden md:table-cell">
-                    Due Date
-                </th>
-                <th className="h-12 px-4 text-left align-middle font-bold hidden md:table-cell">
-                    Delete
-                </th>
-                <th className="h-12 px-4 text-left align-middle font-bold hidden md:table-cell">
-                    View Todo
-                </th>
-            </tr>
-        </thead>
-    )
+export const TodosSkeleton = () => {
+    return <Todos category="all" />
 }
 
 
@@ -91,7 +77,7 @@ interface TBodyProps {
     todos: Todo[];
     deletetodo: (todo: string) => void;
 }
-const TBody: React.FC<TBodyProps> = ({ todos, deletetodo }) => {
+export const TBody: React.FC<TBodyProps> = ({ todos, deletetodo }) => {
     return (
         <tbody>
             {

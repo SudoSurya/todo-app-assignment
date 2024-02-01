@@ -1,9 +1,9 @@
+import { Link } from "react-router-dom";
 
 export default function CategoryPersonal() {
     return (
-        <a
+        <Link to="/personal/todos"
             className="flex items-center gap-3 rounded-lg px-3 py-2 text-black transition-all hover:text-gray-900"
-            href="#"
         >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -21,6 +21,6 @@ export default function CategoryPersonal() {
                 <circle cx="12" cy="7" r="4"></circle>
             </svg>
             Personal
-        </a>
+        </Link>
     )
 }
