@@ -43,9 +43,13 @@ export default function Header() {
                             placeholder="Search todos..."
                             type="search"
                         />
+
                     </div>
                 </form>
             </div>
         </header>
     )
 }
+
+
+
